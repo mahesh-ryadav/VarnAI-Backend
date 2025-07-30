@@ -2,16 +2,15 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import serverless from 'serverless-http';
-
 import userRouter from './routes/userRoutes.js';
 import imageRouter from './routes/imageRoutes.js';
 import connectDB from './configs/mongodb.js';
 
+// Initialize Express App
 const app = express();
 
-// Connect to database
-await connectDB();
+// Connect to MongoDB
+connectDB();
 
 // Middleware
 app.use(express.json());
@@ -21,8 +20,13 @@ app.use(cors());
 app.use('/api/user', userRouter);
 app.use('/api/image', imageRouter);
 
-// Root test route
-app.get('/', (req, res) => res.send('API Working'));
+// Root Route
+app.get('/', (req, res) => {
+  res.send("API is working - Render Deployment");
+});
 
-// Export for Vercel
-export const handler = serverless(app);
+// Start Server
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});
