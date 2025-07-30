@@ -8,6 +8,12 @@ import connectDB from './configs/mongodb.js';
 
 // Initialize Express App
 const app = express();
+const cors = require('cors');
+
+app.use(cors({
+  origin: ['https://your-vercel-frontend.vercel.app'], // ← replace with your actual Vercel frontend domain
+  credentials: true
+}));
 
 // Connect to MongoDB
 connectDB();
